@@ -1,0 +1,26 @@
+---
+const { message } = Astro.props;
+---
+
+<div class="fallback-container">
+  <div class="fallback-card">
+    <p>{message}</p>
+  </div>
+</div>
+
+<style>
+  .fallback-container {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 1rem 0;
+    background-color: #f9f9f9;
+  }
+  
+  .fallback-card {
+    padding: 0.5rem;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+</style>

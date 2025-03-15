@@ -1,11 +1,66 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+//Frontmatter section
+import LoadComponent from '../components/LoadComponent';
+import IdleComponent from '../components/IdleComponent';
+import VisibleComponent from '../components/VisibleComponent';
+import MediaComponent from '../components/MediaComponent';
+import OnlyComponent from '../components/OnlyComponent';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro Client Directives Demo</title>
+		<link href="/styles/style.css" rel="stylesheet" />
+		<script is:inline>
+			// Record when the page starts loading
+			window.__pageLoadTime = performance.now();
+		</script>
+	</head>
+	<body>		
+		<h1>Astro Client Directives Demo</h1>
+		
+		<p style="text-align: center; margin-bottom: 2rem;">
+			This demo shows how Astro's client directives control component hydration.
+			Each component displays its hydration status and timing to help you understand when it becomes interactive.
+		</p>
+
+		<LoadComponent client:load />
+		
+		<div class="idle-section">
+			<div class="idle-explanation">
+				<h3>Understanding client:idle</h3>
+				<p>The <code>client:idle</code> directive uses the browser's <code>requestIdleCallback</code> API to hydrate components when the browser has free processing time. Unlike <code>client:load</code> which hydrates immediately, <code>client:idle</code> components wait until:</p>
+				<ul>
+					<li>The browser finishes its critical initial rendering work</li>
+					<li>The main thread has idle time available</li>
+					<li>Or the specified timeout is reached (default is 50ms)</li>
+				</ul>
+			</div>
+			
+			<IdleComponent client:idle title="IdleComponent (no timeout)" />
+		</div>
+		
+		<div class="spacer">
+			↓ Scroll down to see the client:visible component ↓
+		</div>
+		
+		<VisibleComponent client:visible={{rootMargin: "200px"}} />
+		
+		<MediaComponent client:media="(min-width: 768px)" />
+		
+		<OnlyComponent client:only="react">
+			<div slot="fallback">Loading client-only component...</div>
+		</OnlyComponent>
+		
+		<div style="text-align: center; margin-top: 2rem;">
+			<a href="/deferred" style="padding: 8px 16px; background-color: #9c27b0; color: white; text-decoration: none; border-radius: 4px; display: inline-block;">
+				View server:defer Demo
+			</a>
+		</div>
+		
+	</body>
+</html>

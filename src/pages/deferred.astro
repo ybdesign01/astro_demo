@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Fallback from "./Fallback.astro";
+import ServerComponent from "../components/ServerComponent.astro";
+
+const prerender = false;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro server:defer Demo</title>
+		<link href="/styles/style.css" rel="stylesheet" />
+	</head>
+	<body>		
+		<h1>Astro server:defer Demo</h1>
+		
+		<p style="text-align: center; margin-bottom: 2rem;">
+			This demo shows how the server:defer directive works in Astro.
+		</p>
+
+		<div class="explanation-box">
+			<h2>How server:defer Works</h2>
+			<p>The <code>server:defer</code> directive tells Astro to:</p>
+			<ol>
+				<li>Initially render the fallback content</li>
+				<li>Stream the page to the browser immediately</li>
+				<li>Continue rendering the slow component on the server</li>
+				<li>Send the completed component when it's ready</li>
+				<li>Replace the fallback with the actual content</li>
+			</ol>
+			<p>This improves perceived performance by showing the page quickly while heavy components load in the background.</p>
+		</div>
+
+		<div>
+			<ServerComponent server:defer>
+				<Fallback slot="fallback" message="Server Island Still Loading ..." />
+			</ServerComponent>
+		</div>
+		
+		<div style="text-align: center; margin-top: 2rem;">
+			<a href="/" style="padding: 8px 16px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 4px;">
+				Back to Client Directives Demo
+			</a>
+		</div>
+	</body>
+</html>
+
+<style>
+	.explanation-box {
+		background-color: #f8f9fa;
+		border-left: 4px solid #6366f1;
+		padding: 1rem 1.5rem;
+		margin-bottom: 2rem;
+		border-radius: 0 4px 4px 0;
+	}
+	
+	.explanation-box h2 {
+		color: #4f46e5;
+		margin-top: 0;
+	}
+	
+	.explanation-box code {
+		background-color: #e0e7ff;
+		padding: 0.2rem 0.4rem;
+		border-radius: 4px;
+		font-family: monospace;
+	}
+</style>
