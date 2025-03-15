@@ -1,0 +1,28 @@
+---
+// A simple component with no client directives
+const count = 0; // This value will never change client-side
+---
+
+<div class="demo-component" style="border-color: #607d8b;">
+  <h3>Regular Component</h3>
+  <div class="status" style="background-color: #cfd8dc;">
+    Static (No Hydration)
+  </div>
+  <p>This component has no client directives. It's rendered on the server and sent as static HTML to the browser.</p>
+  <p>It doesn't become interactive because no JavaScript is sent for it.</p>
+  
+  <button>
+    Count is: {count} (clicking won't work)
+  </button>
+</div>
+
+<style>
+  button {
+    background-color: #607d8b;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    opacity: 0.8;
+  }
+</style>
