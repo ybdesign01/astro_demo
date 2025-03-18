@@ -1,0 +1,92 @@
+---
+// This is the index page for the /blog route
+// It will list all available blog posts
+
+const posts = {
+  'my-first-post': {
+    title: 'My First Blog Post',
+    content: 'This is the content of my first blog post.',
+    date: 'January 1, 2023'
+  },
+  'second-post': {
+    title: 'Second Blog Post',
+    content: 'Content for the second blog post goes here.',
+    date: 'February 15, 2023'
+  }
+};
+
+const postEntries = Object.entries(posts).map(([slug, data]) => ({
+  slug,
+  ...data
+}));
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Blog Posts</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a>
+    </nav>
+    
+    <main>
+      <h1>Blog Posts</h1>
+      
+      <ul class="post-list">
+        {postEntries.map(post => (
+          <li>
+            <a href={`/blog/${post.slug}`}>
+              <h2>{post.title}</h2>
+              <p class="date">Published on {post.date}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </main>
+  </body>
+</html>
+
+<style>
+  nav {
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 2rem;
+  }
+  
+  .post-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .post-list li {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .post-list li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .post-list a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .post-list h2 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+  }
+  
+  .date {
+    color: #666;
+    font-style: italic;
+    margin: 0;
+  }
+</style>

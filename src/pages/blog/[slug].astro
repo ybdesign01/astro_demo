@@ -1,0 +1,69 @@
+---
+// This is a dynamic route that will match URLs like /blog/my-first-post
+// The [slug] in the filename becomes a parameter you can access
+
+const { slug } = Astro.params;
+
+const posts = {
+  'my-first-post': {
+    title: 'My First Blog Post',
+    content: 'This is the content of my first blog post.',
+    date: 'January 1, 2023'
+  },
+  'second-post': {
+    title: 'Second Blog Post',
+    content: 'Content for the second blog post goes here.',
+    date: 'February 15, 2023'
+  }
+};
+
+const post = posts[slug] || null;
+
+if (!post) {
+  return Astro.redirect('/404');
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{post.title}</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a> | 
+      <a href="/blog/my-first-post">First Post</a> | 
+      <a href="/blog/second-post">Second Post</a>
+    </nav>
+    
+    <main>
+      <h1>{post.title}</h1>
+      <p class="date">Published on {post.date}</p>
+      
+      <div class="content">
+        {post.content}
+      </div>
+      
+      <a href="/blog">Back to all posts</a>
+    </main>
+  </body>
+</html>
+
+<style>
+  nav {
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 2rem;
+  }
+  
+  .date {
+    color: #666;
+    font-style: italic;
+  }
+  
+  .content {
+    margin: 2rem 0;
+    line-height: 1.6;
+  }
+</style>
